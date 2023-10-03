@@ -1,0 +1,48 @@
+void p1(num a, num b, num c):
+	if a greater b and a greater c:
+		print(num a);
+	else if b greater a and b greater c:
+		print(num b);
+	else if c greater a and c greater b:
+		print(num c);
+	
+	
+		
+
+bool p2(num a):
+	if a lower 2:
+		return False;
+	
+	if a = 2:
+		return True;
+	
+	if a % 2 = 0;
+		return False;
+	
+	num i;
+	for i <- 3; i lower a / 2; i <- i + 1:
+		if a % i = 0:
+			return False;
+	return True;
+	
+
+num p3(num n):
+	num x;
+	num suma;
+
+	num i;
+	for i <- 1; i lower n + 1
+; i <- i + 1:
+		read(x);
+		suma <- suma + x;
+	return suma;
+
+
+
+void p1err(num a, num b, num c):
+	if a greatr b and a greater c:
+		print(num a);
+	else if b greater x and b greater c:
+		print(num b);
+	else if c greater a and c greater b:
+		print(num c);
