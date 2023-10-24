@@ -1,0 +1,23 @@
+program = "main:" {stmt} 
+stmt = (decl_var_stmt | decl_list_stmt | assign_stmt | if_stmt | for_stmt | io_stmt | assign_arr_stmt)";"
+
+type = "num" | "bool" | "string" 
+decl_var_stmt = type identifier 
+decl_list_stmt = type identifier "[]" 
+
+assign_stmt = identifier "<-" expression | identifier ("--" | "++") 
+expression = int_expr | string_expr
+int_expr = integer | identifier | int_expr ("+" | "-" | "/" | "*") int_expr | "(" int_expr ("+" | "-" | "/" | "*") int_expr ")"
+string_expr = string | identifier | string_expr + string_expr
+
+if_stmt = "if" condition ":" stmt {stmt} [else_stmt] 
+else_stmt = ("else" "if" condition ":" stmt {stmt} ) | "else" ":" stmt {stmt}  
+condition = expression ("equal" | "lowereq" | "greatereq" | "greater" |"lower") expression
+
+io_stmt = read_stmt | print_stmt
+read_stmt = "read" "(" identifier ")"
+print_stmt = "print"  "(" (identifier | expression) ")"
+
+assign_arr_stmt =  identifier "[" pozitive_number "]" "<-" expression
+
+for_stmt = "for" assign_stmt  ";" condition ";" (assign_arr_stmt | assign_stmt) ":"  stmt {stmt} 

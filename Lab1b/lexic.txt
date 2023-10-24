@@ -1,0 +1,17 @@
+Alphabet
+A-Z
+a-z
+_ 
+
+Keywords: main, read, for, write, print, if, else 
+Separators: [], {}, (), :, ;, ',', space 
+Operators: +,-,*,/,lower,greater,lowereq,greatereq,equal
+
+identifier = (letter | "_") {letter|digit|"_"} 
+letter = a | b | c ... | z | A | B  ... | Z  
+digit = 0 | 1 | 2 | 3.... | 9
+not_zero = 1 | 2 | 3 ... | 9
+
+integer = [+ | -]not_zero {digit} | 0
+string = """{letter|digit|"_"|" "}"""
+boolean = true | false
