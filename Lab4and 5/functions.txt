@@ -1,0 +1,46 @@
+void p1(int a, int b, int c):
+	if a > b and a > c:
+		print(a);
+	else if b > a and b > c:
+		print(b);
+	else if c > a and c > b:
+		print(c);
+	
+		
+bool p2(int a):
+	if a < 2:
+		return False;
+	
+	if a == 2:
+		return True;
+	
+	if a % 2 = 0;
+		return False;
+	
+	int i;
+	for i = 3; i < a / 2; i = i + 1:
+		if a % i == 0:
+			return False;
+	return True;
+	
+
+int p3(int n):
+	int x;
+	int suma;
+
+	int i;
+	for i = 1; i < n + 1; i = i + 1:
+		read(x);
+		suma = suma + x;
+	return suma;
+    
+    
+void p1err(int a, int b, int c):
+	if a > b && a > c:
+		print(num a);
+	else if b & x and b > c:
+		print(num b);
+
+
+
+

@@ -1,0 +1,104 @@
+class SymbolEntry:
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
+
+class SymbolTable:
+    def __init__(self, table_size):
+        self.table_size = table_size
+        self.table = [[] for _ in range(table_size)]
+
+    def hash(self, key):
+        hash_val = sum(ord(c) for c in key)
+        return hash_val % self.table_size
+
+    def insert(self, name, value):
+        index = self.hash(name)
+        entry = SymbolEntry(name, value)
+        self.table[index].append(entry)
+
+
+    def lookup(self, name):
+        index = self.hash(name)
+        for entry in self.table[index]:
+            if entry.name == name:
+                return entry.value
+        return None
+
+def tokenize(text):
+    # Splitting the text into tokens
+    tokens = text.replace('(', ' ( ') \
+                 .replace(')', ' ) ') \
+                 .replace(':', ' : ') \
+                 .replace(',', ' , ') \
+                 .replace('=', ' = ') \
+                 .replace('+', ' + ') \
+                 .replace('-', ' - ') \
+                 .replace('*', ' * ') \
+                 .replace('/', ' / ') \
+                 .replace(';', ' ; ') \
+                 .replace('==', ' == ') \
+                 .replace('>=', ' >= ') \
+                 .replace('<=', ' <= ') \
+                 .replace('<', ' < ') \
+                 .replace('>', ' > ') \
+                 .replace('%', ' % ') \
+                 .split()
+
+    return tokens
+
+def analyze_functions(file_content):
+    symbol_table = SymbolTable(100)
+    PIF = []  # Program Internal Form
+
+    lines = file_content.splitlines()
+    line_number = 0
+    error_message = ""
+
+    for line in lines:
+        line_number += 1
+        tokens = tokenize(line)
+        #print(f"Tokens in line {line_number}: {tokens}")
+        for token in tokens:
+            if token == '(' or token == ')' or token == ':' or token == ',' or token == '=' or token == '+' or \
+               token == '-' or token == '*' or token == '/' or token == ';' or token == '==' or token == '>=' or \
+               token == '<=' or token == 'int' or token == 'for' or token == 'print' or token == 'if' or \
+               token == 'else' or token == 'True' or token == 'False' or token == '<' or token == '>' or \
+               token == '%' or token == 'bool' or token == 'void' or token == 'and' or token == 'read' or token == 'return':
+                PIF.append((token, -1))
+                continue
+            if token.isalnum():
+                value = symbol_table.lookup(token)
+                if value is None:
+                    symbol_table.insert(token, "Identifier")
+                PIF.append((token, symbol_table.hash(token)))
+            else:
+                error_message = f"Lexical error at line {line_number}: {token}"
+                print(error_message)
+                break
+
+    return symbol_table, PIF, error_message
+
+if __name__ == '__main__':
+    file_path = 'functions.txt'
+    try:
+        with open(file_path, 'r') as file:
+            file_content = file.read()
+        print("File read successfully.")
+    except FileNotFoundError:
+        print("File not found. Please provide the correct file path.")
+
+
+    symbol_table, PIF, error = analyze_functions(file_content)
+
+
+    with open('ST.out', 'w') as st_out:
+        for i, bucket in enumerate(symbol_table.table):
+            if bucket:
+                st_out.write(f"Bucket {i}: {', '.join(entry.name for entry in bucket)}\n")
+
+
+    with open('PIF.out', 'w') as pif_out:
+        for entry in PIF:
+            pif_out.write(f"{entry[0]}, {entry[1]}\n")
+
